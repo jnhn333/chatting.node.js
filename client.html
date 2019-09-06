@@ -25,7 +25,7 @@
     <script src="/socket.io/socket.io.js"></script> <!-- 1 -->
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var socket = io('https://chatting-nodejs-with-derrick.herokuapp.com/'); //1
+      var socket = io(); //1
       $('#chat').on('submit', function(e){ //2
         socket.emit('send message', $('#name').val(), $('#message').val());
         $('#message').val('');
