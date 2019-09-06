@@ -1,54 +1,20 @@
-// server.js
-
-// var express = require('express');
-// var app     = express();
-// var path    = require('path');
-//
-
-// // Angular
-// app.use(express.static(path.resolve(__dirname, '../dist'))); //1
-// app.get('*', function (req, res) { //2
-//   var indexFile = path.resolve(__dirname,'../dist/index.html');
-//   res.sendFile(indexFile);
-// });
-
+var PORT = process.env.PORT || 5000;
 var express = require('express');
 var app = express();
-var http = require('http').Server(app); //1
-var io = require('socket.io')(http);    //1
 
-app.get('/',function(req, res){  //2
-  res.sendFile(__dirname + '/client.html');
+var http = require('http');
+var server = http.Server(app);
+
+app.use(express.static('client'));
+
+server.listen(PORT, function() {
+  console.log('Chat server running');
 });
 
-// // Angular
-// app.use(express.static(io.resolve(__dirname, '../chatting'))); //1
-// app.get('*', function (req, res) { //2
-//   var indexFile = io.resolve(__dirname,'../chatting/client.html');
-//   res.sendFile(indexFile);
-// });
+var io = require('socket.io')(server);
 
-var count=1;
-io.on('connection', function(socket){ //3
-  console.log('user connected: ', socket.id);  //3-1
-  var name = "user" + count++;                 //3-1
-  io.to(socket.id).emit('change name',name);   //3-1
-
-  socket.on('disconnect', function(){ //3-2
-    console.log('user disconnected: ', socket.id);
-  });
-
-  socket.on('send message', function(name,text){ //3-3
-    var msg = name + ' : ' + text;
-    console.log(msg);
-    io.emit('receive message', msg);
+io.on('connection', function(socket) {
+  socket.on('message', function(msg) {
+    io.emit('message', msg);
   });
 });
-
-var port = process.env.PORT || 3000; //3
-app.listen(port, function(){
-  console.log('listening on port:' + port);
-});
-// http.listen(3000, function(){ //4
-//   console.log('server on!');
-// });
