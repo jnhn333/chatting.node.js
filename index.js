@@ -1,18 +1,27 @@
 // server.js
 
-var express = require('express');
-var app     = express();
-var path    = require('path');
-
-// app.get('/',function(req, res){  //2
-//   res.sendFile(__dirname + '/client.html');
+// var express = require('express');
+// var app     = express();
+// var path    = require('path');
+//
+// // app.get('/',function(req, res){  //2
+// //   res.sendFile(__dirname + '/client.html');
+// // });
+//
+// // Angular
+// app.use(express.static(path.resolve(__dirname, '../dist'))); //1
+// app.get('*', function (req, res) { //2
+//   var indexFile = path.resolve(__dirname,'../dist/index.html');
+//   res.sendFile(indexFile);
 // });
 
-// Angular
-app.use(express.static(path.resolve(__dirname, '../dist'))); //1
-app.get('*', function (req, res) { //2
-  var indexFile = path.resolve(__dirname,'../dist/index.html');
-  res.sendFile(indexFile);
+var express = require('express');
+var app = express();
+var http = require('http').Server(app); //1
+var io = require('socket.io')(http);    //1
+
+app.get('/',function(req, res){  //2
+  res.sendFile(__dirname + '/client.html');
 });
 
 var count=1;
