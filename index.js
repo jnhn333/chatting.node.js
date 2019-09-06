@@ -9,7 +9,7 @@ var io = require('socket.io')(server);
 
 //app.use(express.static(__dirname + '/client.html'));
 
-app.use(express.static('client'));
+app.use(express.static(__dirname + '/client.html'));
 
 server.listen(PORT, function() {
   console.log('Chat server running');
