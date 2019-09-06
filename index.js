@@ -22,9 +22,9 @@ var io = require('socket.io')(http);    //1
 // });
 
 // Angular
-app.use(express.static(path.resolve(__dirname, '../dist'))); //1
+app.use(express.static(io.resolve(__dirname, '../dist'))); //1
 app.get('*', function (req, res) { //2
-  var indexFile = path.resolve(__dirname,'../dist/index.html');
+  var indexFile = io.resolve(__dirname,'../dist/client.html');
   res.sendFile(indexFile);
 });
 
