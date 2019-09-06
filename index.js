@@ -5,13 +5,17 @@ var app = express();
 var http = require('http');
 var server = http.Server(app);
 
+var io = require('socket.io')(server);
+
 app.use(express.static('client'));
 
 server.listen(PORT, function() {
   console.log('Chat server running');
 });
 
-var io = require('socket.io')(server);
+app.get('/',function(req, res){  //2
+  res.sendFile(__dirname + '/client.html');
+});
 
 io.on('connection', function(socket) {
   socket.on('message', function(msg) {
