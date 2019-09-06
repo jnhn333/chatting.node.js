@@ -17,6 +17,9 @@ app.get('/',function(req, res){  //2
   res.sendFile(__dirname + '/client/client.html');
 });
 
+app.use('/client', express.static('main.js'));
+app.use('/client', express.static('ios.css'));
+
 io.on('connection', function(socket) {
   socket.on('message', function(msg) {
     io.emit('message', msg);
