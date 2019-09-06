@@ -17,16 +17,16 @@ var app = express();
 var http = require('http').Server(app); //1
 var io = require('socket.io')(http);    //1
 
-app.get('/',function(req, res){  //2
-  res.sendFile(__dirname + '/client.html');
-});
-
-// // Angular
-// app.use(express.static(io.resolve(__dirname, '../dist'))); //1
-// app.get('*', function (req, res) { //2
-//   var indexFile = io.resolve(__dirname,'../dist/client.html');
-//   res.sendFile(indexFile);
+// app.get('/',function(req, res){  //2
+//   res.sendFile(__dirname + '/client.html');
 // });
+
+// Angular
+app.use(express.static(io.resolve(__dirname, '../dist'))); //1
+app.get('*', function (req, res) { //2
+  var indexFile = io.resolve(__dirname,'../dist/client.html');
+  res.sendFile(indexFile);
+});
 
 var count=1;
 io.on('connection', function(socket){ //3
@@ -45,6 +45,10 @@ io.on('connection', function(socket){ //3
   });
 });
 
-http.listen(3000, function(){ //4
-  console.log('server on!');
+var port = process.env.PORT || 3000; //3
+app.listen(port, function(){
+  console.log('listening on port:' + port);
 });
+// http.listen(3000, function(){ //4
+//   console.log('server on!');
+// });
