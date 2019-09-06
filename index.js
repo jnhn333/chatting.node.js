@@ -7,7 +7,7 @@ var server = http.Server(app);
 
 var io = require('socket.io')(server);
 
-app.use(express.static(__dirname + '/chatting'));
+app.use(express.static(__dirname + '/client.html'));
 
 //app.use(express.static('client'));
 
